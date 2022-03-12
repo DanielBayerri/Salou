@@ -20,6 +20,7 @@ def add_database():
         (26, "Yolanda Ortega", "vendes"),
         (29, "Jordi Daniel", "vetadine, coliri"),
         (431, "Jesus", "vetadine, coliri, gasses")
+        (40, "Daniel Ortega", "vendes, cola"),
     ]
     cursor.executemany("""INSERT INTO consultes VALUES (?, ?, ?)""", data)
     conn.commit()

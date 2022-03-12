@@ -4,8 +4,22 @@ db = SQLAlchemy()
 
 class Consultes(db.Model):
     rowid = db.Column(db.Integer, primary_key=True)
-    numero = db.Column(db.Integer, nullable = False)
+    numero = db.Column(db.Integer, unique = True, nullable = False)
     doctor = db.Column(db.String(100), unique = True, nullable = False)
     llista = db.Column(db.String(500), nullable = True)
 
-
+    def __str__(self):
+        return "Consulta: {}. Doctor: {}. Material: {}".format(
+            self.numero, 
+            self.doctor, 
+            self.llista
+            )
+    
+    # Ho passem a diccionari perqué sigui interpretable per JSON
+    def serialize(self):
+        return {
+            "rowid": self.rowid,
+            "numero": self.numero,
+            "doctor": self.doctor,
+            "llista": self.llista
+        }
