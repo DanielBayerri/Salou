@@ -8,6 +8,12 @@ class Consultes(db.Model):
     doctor = db.Column(db.String(100), unique = True, nullable = False)
     llista = db.Column(db.String(500), nullable = True)
 
+    def __init__(self, numero, doctor, llista):
+        super().__init__()
+        self.numero = numero
+        self.doctor = doctor
+        self.llista = llista
+
     def __str__(self):
         return "Consulta: {}. Doctor: {}. Material: {}".format(
             self.numero, 

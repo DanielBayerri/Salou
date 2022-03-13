@@ -1,5 +1,6 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from Models import db, Consultes
+from logging import exception
 
 
 app = Flask(__name__)
@@ -10,7 +11,7 @@ db.init_app(app)
 # Aquí comencen les rutes # 127.0.0.1_4000
 @app.route("/")
 def home():
-    return "<h1>Welcome!</h1>"
+    return render_template("index.html")
 
 # 127.0.0.1_4000/api/consultes
 @app.route("/api/consultes", methods=["GET"])
@@ -64,5 +65,24 @@ def buscaConsulta():
         exception("[SERVER]: Error")
         return jsonify({"msg: Ha ocurrido un error"}), 500
 
+
+@app.route("/api/addcomanda", methods=["POST"])
+def addcomanda():
+    try:
+        numero = request.form["numero"]
+        doctor = request.form["doctor"]
+        llista = request.form["llista"]
+
+        comanda = Consultes(int(numero), doctor, llista)
+        db.session.add(comanda)
+        db.session.commit()
+
+        return jsonify(comanda.serialize()), 200
+    except Exception:
+        exception("\n[SERVER]: Error in route /api/addcomanda. Log: \n")
+        return jsonify({"msg: Ha ocurrido un error"}), 500
+
 if __name__ == "__main__":
     app.run(debug = True, port = 4000)
+ 
+ https://www.youtube.com/watch?v=ziMTDdG0zOA

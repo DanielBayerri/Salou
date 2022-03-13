@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        Afegir nova petició
+    </h1>
+
+    <form action="/api/addcomanda" method="post">
+        <label for="numero">Numero de consulta:</label><br>
+        <input type="integer" name="numero" id="numero" value="2"><br>
+
+        <label for="doctor">Nom del doctor:</label><br>
+        <input type="text" name="doctor" id="doctor" value="Daniel Bayerri Ortega"><br>
+        
+        <label for="llista">Llista de productes a demanar:</label><br>
+        <input type="text" name="llista" id="llista" value="Paper de camilla, vendes"><br>
+        
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>
