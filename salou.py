@@ -13,6 +13,10 @@ db.init_app(app)
 def home():
     return render_template("index.html")
 
+@app.route("/searchconsulta", methods=["GET"])
+def searchconsulta():
+    return render_template("searchconsulta.html")
+
 # 127.0.0.1_4000/api/consultes
 @app.route("/api/consultes", methods=["GET"])
 def getConsultes():
@@ -82,7 +86,22 @@ def addcomanda():
         exception("\n[SERVER]: Error in route /api/addcomanda. Log: \n")
         return jsonify({"msg: Ha ocurrido un error"}), 500
 
+# 127.0.0.1_4000/api/consulta?numero=26
+@app.route("/api/searchconsulta", methods=["POST"])
+def searchconsultaForm():
+    try:
+        numeroConsulta = request.form["numero"]
+        consulta = Consultes.query.filter(Consultes.numero.like(f"%{numeroConsulta}%")).first()
+        if not consulta:
+            return jsonify({"msg": "Aquesta consulta no te dades"}), 200
+        else:
+            return jsonify(consulta.serialize()), 200
+    except Exception:
+        exception("[SERVER]: Error in route /api/searchconsulta -->")
+        return jsonify({"msg: Ha ocurrido un error"}), 500
+
+
 if __name__ == "__main__":
     app.run(debug = True, port = 4000)
  
- https://www.youtube.com/watch?v=ziMTDdG0zOA
+ 
